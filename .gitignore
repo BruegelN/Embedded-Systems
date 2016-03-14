@@ -1,3 +1,9 @@
+# configuration for every student
+*/config.mk
+
+# bin/output folders
+*/bin/*
+
 # Compiled Object files
 *.slo
 *.lo
