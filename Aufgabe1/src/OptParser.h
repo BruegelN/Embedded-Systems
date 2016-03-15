@@ -2,6 +2,7 @@
   #define OPT_PARSER_H
 
 #include <iostream> /* std::cout */
+#include <cstring> /* strncmp */
 
 class CmdLineOptParser {
   public:
