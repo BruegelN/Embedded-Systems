@@ -17,7 +17,7 @@ bool CmdLineOptParser::parse(int argc, const char **argv)
 
     for(int i=0; i<argc; i++)
     {
-      if( '-' == argv[i][0])
+      if( '-' == argv[i][0] && (0 != argv[i][1]))
       {
         /* found a new option thus argv[i][1] is the key(char c).*/
         if('=' == argv[i][2])
