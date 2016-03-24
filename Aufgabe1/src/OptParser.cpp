@@ -1,3 +1,6 @@
+#include <iostream> /* std::cout */
+#include <cstring> /* strncmp */
+
 #include "OptParser.h"
 
 
