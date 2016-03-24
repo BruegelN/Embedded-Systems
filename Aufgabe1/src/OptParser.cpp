@@ -17,15 +17,62 @@ bool CmdLineOptParser::parse(int argc, const char **argv)
 
     for(int i=0; i<argc; i++)
     {
-      std::cout
-        << "\tNumber: " << i
-        << "\tValue: " << argv[i]<< std::endl;
-
-        const char* argumentOfInterest = argv[i];
-        if(0 == strncmp(argumentOfInterest,"-x", 2))
+      if( '-' == argv[i][0])
+      {
+        /* found a new option thus argv[i][1] is the key(char c).*/
+        if('=' == argv[i][2])
         {
-          std::cout << "-x given" << std::endl;
+          /* it's an asingment and with argv[i][3] the value(info starts) */
+          this->option(argv[i][1] , &argv[i][3]);
         }
+        else if(0 < argv[i][2])
+        {
+          /*value start right after key */
+          this->option(argv[i][1] , &argv[i][2]);
+        }
+        else
+        {
+          /**
+          * Only -x option given.
+          * So either -x key
+          * or -x -x is possible.
+          * But first check if there is a next argument given!
+          */
+          if((i+1) < argc)
+          {
+            if('-' == argv[i+1][0])
+            {
+              /**
+              * The first char of the next argument block is another dash.
+              * Which means we're done, because it's the next key and there is no
+              * value(info is nullptr).
+              */
+              this->option(argv[i][1] , nullptr);
+            }
+            else
+            {
+              /**
+              * A next argument exist and it's not a new key (-x).
+              * The next argument is the value(info) for the given key.
+              */
+              this->option(argv[i][1] , &argv[i+1][0]);
+              /**
+              * Don't forget to go over the next argument.
+              * Even if we check every argument if it starts with '-'.
+              */
+              ++i;
+            }
+          }
+          else
+          {
+            /**
+            * The given -x ist the last argument
+            * which means there is no value(info is nullptr).
+           */
+            this->option(argv[i][1] , nullptr);
+          }
+        }
+      }
     }
     return true;
   }
