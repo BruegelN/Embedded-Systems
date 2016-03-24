@@ -12,12 +12,9 @@ bool CmdLineOptParser::parse(int argc, const char **argv)
 {
   if((2 <= argc) && argv != nullptr)
   {
-    /*
-    * Have at least two arguments given.
-    * The first one is the program name,
-    * the second is an actual argument, thus list them.
-    */
-    std::cout << "Given arguments:" << std::endl;
+    /* Skip over program name */
+    argc--, argv++;
+
     for(int i=0; i<argc; i++)
     {
       std::cout
