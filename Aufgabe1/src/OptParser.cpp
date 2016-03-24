@@ -41,12 +41,14 @@ bool CmdLineOptParser::parse(int argc, const char **argv)
 
 bool CmdLineOptParser::option(char c, const char *info)
 {
-  if((1 <= c) && (info != nullptr))
+  std::cout << "\tArgument: " << c << " given." << std::endl;
+  if(nullptr != info)
   {
-    return true;
+    std::cout << "\tValue: " << std::string(info) << std::endl;
   }
   else
   {
-    return false;
+    std::cout << "\tNo value given." << std::endl;
   }
+  return true;
 }
