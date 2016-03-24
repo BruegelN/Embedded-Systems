@@ -19,8 +19,8 @@ bool CmdLineOptParser::parse(int argc, const char **argv)
     {
       if( '-' == argv[i][0] && (0 != argv[i][1]))
       {
-        /* found a new option thus argv[i][1] is the key(char c).*/
-        if('=' == argv[i][2])
+        /* found a new key(-c) thus argv[i][1] is the key(char c).*/
+        if((0 != argv[i][2]) && '=' == argv[i][2])
         {
           /* it's an asingment and with argv[i][3] the value(info starts) */
           this->option(argv[i][1] , &argv[i][3]);
