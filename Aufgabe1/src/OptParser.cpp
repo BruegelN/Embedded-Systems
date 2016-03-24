@@ -78,7 +78,6 @@ bool CmdLineOptParser::parse(int argc, const char **argv)
   }
   else
   {
-    std::cout << "Wrong number of arguments!" << std::endl;
     return false;
   }
 }
