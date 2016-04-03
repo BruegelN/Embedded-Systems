@@ -1,6 +1,3 @@
-#include <iostream> /* std::cout */
-#include <cstring> /* strncmp */
-
 #include "OptParser.h"
 
 
@@ -111,14 +108,9 @@ bool CmdLineOptParser::parse(int argc, const char **argv)
 
 bool CmdLineOptParser::option(char c, const char *info)
 {
-  std::cout << "\tArgument: " << c << " given." << std::endl;
-  if(nullptr != info)
-  {
-    std::cout << "\tValue: " << std::string(info) << std::endl;
-  }
-  else
-  {
-    std::cout << "\tNo value given." << std::endl;
-  }
-  return true;
+  /* To prevent unused-parameter warings */
+  c = 0;
+  info = nullptr;
+
+  return false;
 }
