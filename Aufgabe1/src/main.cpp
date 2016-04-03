@@ -1,9 +1,9 @@
-#include "OptParser.h"
+#include "MyOptParser.h"
 
 int main( int argc, const char** argv)
 {
 
-  CmdLineOptParser theParser = CmdLineOptParser();
+  MyOptParser theParser = MyOptParser();
 
   return !theParser.parse(argc, argv);
 
