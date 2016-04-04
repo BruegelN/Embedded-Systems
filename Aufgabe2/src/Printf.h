@@ -10,10 +10,7 @@ TODO
 %x fuer die Ausgabe in Hexadezimalform
 %b fuer die Ausgabe in Binaerform
 */
+char* Printf(char* dst, const void* end, const char* fmt, ...);
 
-namespace Output
-{
-  char* Printf(char* dst, const void* end, const char* fmt, ...);
-}
 
 #endif // CUSTOM_PRINTF_H
