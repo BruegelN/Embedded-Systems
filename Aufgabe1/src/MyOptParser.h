@@ -3,12 +3,12 @@
 
 #include "OptParser.h"
 
-class MyOptParser : public CmdLineOptParser {
+class MyOptParser final: public CmdLineOptParser {
   public:
     MyOptParser();
 
   protected:
-    virtual bool option(char c, const char* info);
+    virtual bool option(char c, const char* info) override;
 };
 
 
