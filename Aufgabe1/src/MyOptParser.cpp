@@ -9,9 +9,9 @@ MyOptParser::MyOptParser()
 
 bool MyOptParser::option(char c, const char* info)
 {
-  if((c >= 48 && c <= 57 )||  // the value has to be in range 0-9
-    (c >= 65 && c <= 90 ) ||  // or in range A-Z
-    (c >= 97 && c <= 122))    // or in range a-z
+  if((c >= '0' && c <= '9' )||
+    (c >= 'A' && c <= 'Z' ) ||
+    (c >= 'a' && c <= 'z'))
   {
     std::cout << "\tArgument: " << c << " given." << std::endl;
     if(nullptr != info)
@@ -27,6 +27,7 @@ bool MyOptParser::option(char c, const char* info)
   }
   else
   {
+    std::cout << "\tInvalid option." << std::endl;
     return false;
   }
 
