@@ -106,11 +106,7 @@ bool CmdLineOptParser::parse(int argc, const char **argv)
   return tmpReturn;
 }
 
-bool CmdLineOptParser::option(char c, const char *info)
+bool CmdLineOptParser::option(char, const char*)
 {
-  /* To prevent unused-parameter warings */
-  c = 0;
-  info = nullptr;
-
   return false;
 }
