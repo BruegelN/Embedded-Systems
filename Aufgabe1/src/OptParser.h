@@ -19,7 +19,7 @@ class CmdLineOptParser {
     // virtual bool parse(int argc, const char** argv) final;
 
   protected:
-    virtual bool option(char c, const char* info);
+    virtual bool option(char, const char*);
 };
 
 
