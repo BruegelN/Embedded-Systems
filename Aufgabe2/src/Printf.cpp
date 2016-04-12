@@ -142,23 +142,43 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
         // %b b'110'
         case 'b':
         {
-          //TODO
-          /*++argCount;
-          signed int value  = va_arg(arguments,signed int);
-          if( value < 0)
+          ++argCount;
+          uint32_t value  = va_arg(arguments,uint32_t);
+          // place a 'b' before every binary number
+          if(isEnoughFreeSpaceInBuffer(dst, end, sizeof(char)))
           {
-            value = std::abs(value);
-            if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
+            putCharInBuffer(&dst, 'b');
+          }
+          else
+          {
+            *tmpReturnValue = 'b';
+            return tmpReturnValue;
+          }
+
+          // for look up
+          static char binarychars[] = "01";
+          // itterate bit by bit over numver
+          for(int position = 31; position>= 0; position--)
+          {
+            char tmpChar = binarychars[value >> position & 0x1];
+            bool foundOne = false;
+            if(tmpChar == '0' && foundOne == false)
             {
-              putCharInBuffer(&dst, '-');
+              continue;
+              // skip over leading zeros!
+            }
+            // else do the following and remember that there has been a one
+            foundOne = true;
+            if(isEnoughFreeSpaceInBuffer(dst, end, sizeof(char)))
+            {
+              putCharInBuffer(&dst, tmpChar);
+            }
+            else
+            {
+              *tmpReturnValue = tmpChar;
+              return tmpReturnValue;
             }
           }
-          // For every digit a char is needed!
-          size_t digits = getBytesCountOfInt(value, 2);
-          if(isEnoughFreeSpaceInBuffer(dst, end, digits))
-          {
-            positionInBuffer += snprintf(&dst[positionInBuffer], digits+1, "%b", value);
-          }*/
           break;
         }
         default:
