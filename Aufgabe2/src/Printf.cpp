@@ -19,7 +19,7 @@ static unsigned int positionInBuffer;
 
 char* Printf(char *dst, const void *end, const char *fmt, ...)
 {
-  if(dst == nullptr || fmt == nullptr || end == nullptr  || fmt[0] != '%')
+  if(dst == nullptr || fmt == nullptr || end == nullptr  )
   {
     // invalid call
     return nullptr;

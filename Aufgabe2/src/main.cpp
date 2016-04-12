@@ -7,7 +7,7 @@
 int main(void)
 {
   char buffer[BUFFER_SIZE] = {0};
-  Printf(buffer, buffer+sizeof(buffer), "%sXXX%dXXX", "123", 123 );
+  Printf(buffer, buffer+sizeof(buffer), "XX%sXXX%dXXX", "123", 123 );
 
 
   std::cout << "BUFFER: " << std::endl;
