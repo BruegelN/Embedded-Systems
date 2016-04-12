@@ -159,15 +159,16 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
 
           // for look up
           static char binarychars[] = "01";
-          // itterate bit by bit over numver
+          // remember that we found a one, which allows us to drop leading zeros
+          bool foundOne = false;
+          // iterate bit by bit over number
           for(int position = 31; position>= 0; position--)
           {
             char tmpChar = binarychars[value >> position & 0x1];
-            bool foundOne = false;
             if(tmpChar == '0' && foundOne == false)
             {
-              continue;
               // skip over leading zeros!
+              continue;
             }
             // else do the following and remember that there has been a one
             foundOne = true;
