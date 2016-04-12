@@ -1,10 +1,6 @@
 #include <cstdarg>
 #include <cstdbool>
 #include <cstdlib> /* size_t */
-#include <cstdio>
-
-// TODO
-#include <iostream>
 
 #include "Printf.h"
 
@@ -27,7 +23,6 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
     return nullptr;
   }
 
-
   va_list arguments;
   va_start(arguments, fmt);
 
@@ -35,7 +30,6 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
   // everytime %*key* is detected an additional incrementation is needed!
   for(int argCount = 0; fmt[argCount] != '\0';argCount++)
   {
-    std::cout << argCount << " elem is: " <<fmt[argCount] << std::endl;
     if('%' == fmt[argCount])
     {
       switch (fmt[argCount+1]) {
@@ -128,10 +122,10 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
 
           // NOTE uint32_t is not guarantued to be unsigned int on all platforms!
           // So you might run into some issues when you try to convert bigger numbers, thus you have to change this to uint64_t and adopt the converstion below.
-
           uint32_t value  = va_arg(arguments,uint32_t);
           if(isEnoughFreeSpaceInBuffer(dst, end, 8+2)) // because 32/4(=sizeof(nibble) == 8 + 2 for 0x)
           {
+            // for uint32_t and hex values it's clear without a loop
             dst[0] = '0';
             dst[1] = 'x';
             dst[2] = hexchars[value >> 28 & 0xF];
@@ -215,6 +209,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
     }
   }
   va_end(arguments);
+
   return nullptr;
 }
 
