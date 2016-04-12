@@ -70,10 +70,11 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
         // %u unsigned int
         case 'u':
         {
+          ++argCount;
           unsigned int value  = va_arg(arguments, unsigned int);
           // For every digit a char is needed!
           char* returnPointer = uintToChars(value, &dst, end);
-          if(returnPointer == nullptr)
+          if(returnPointer != nullptr)
           {
             // return first not printable char
             *tmpReturnValue = *returnPointer;
