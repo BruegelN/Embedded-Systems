@@ -13,9 +13,9 @@ static bool isEnoughFreeSpaceInBuffer(char* dst, const void* end, size_t nBytes)
 /**
 * use pointer to char* to decrease the buffer automaticly whenever a char is placed in buffer.
 */
-static void putCharInBuffer(char** dst, char value);
 static size_t getBytesCountOfInt(unsigned int value, int base);
 //static void reduceRemainingBufer(char **dst, size_t nBytes);
+static void putCharInBuffer(char** dstAddr, char value);
 
 
 char* Printf(char *dst, const void *end, const char *fmt, ...)
@@ -31,7 +31,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
   va_start(arguments, fmt);
 
   // increment allways by one
-  // everytime %*key* is detected an additional inkrementation is needed!
+  // everytime %*key* is detected an additional incrementation is needed!
   for(int argCount = 0; fmt[argCount] != '\0';argCount++)
   {
     std::cout << argCount << " elem is: " <<fmt[argCount] << std::endl;
@@ -183,14 +183,14 @@ static bool isEnoughFreeSpaceInBuffer(char* dst, const void* end, size_t nBytes)
   }
 }
 
-static void putCharInBuffer(char** dst, char value)
+static void putCharInBuffer(char** dstAddr, char value)
 {
-  if(dst == nullptr || *dst == nullptr)
+  if(dstAddr == nullptr || *dstAddr == nullptr)
   {
     return;
   }
-  (*dst)[0] = value;
-  (*dst) = *dst +1;
+  (*dstAddr)[0] = value;
+  (*dstAddr) = *dstAddr +1;
 }
 
 static size_t getBytesCountOfInt(unsigned int value, int base)
