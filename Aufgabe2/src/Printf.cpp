@@ -109,21 +109,33 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
         case 'x':
         {
           ++argCount;
-          signed int value  = va_arg(arguments,signed int);
-          if( value < 0)
+          // for look up
+          static char hexchars[] = "0123456789ABCDEF";
+
+          // NOTE uint32_t is not guarantued to be unsigned int on all platforms!
+          // So you might run into some issues when you try to convert bigger numbers, thus you have to change this to uint64_t and adopt the converstion below.
+
+          uint32_t value  = va_arg(arguments,uint32_t);
+          if(isEnoughFreeSpaceInBuffer(dst, end, 8+2)) // because 32/4(=sizeof(nibble) == 8 + 2 for 0x)
           {
-            value = std::abs(value);
-            if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
-            {
-              putCharInBuffer(&dst, '-');
-            }
+            dst[0] = '0';
+            dst[1] = 'x';
+            dst[2] = hexchars[value >> 28 & 0xF];
+            dst[3] = hexchars[value >> 24 & 0xF];
+            dst[4] = hexchars[value >> 20 & 0xF];
+            dst[5] = hexchars[value >> 16 & 0xF];
+            dst[6] = hexchars[value >> 12 & 0xF];
+            dst[7] = hexchars[value >>  8 & 0xF];
+            dst[8] = hexchars[value >>  4 & 0xF];
+            dst[9] = hexchars[value       & 0xF];
+            // manualy decrease buffer!!!
+            dst += 10;
           }
-          // For every digit a char is needed!
-          size_t digits = getBytesCountOfInt(value, 16);
-          if(isEnoughFreeSpaceInBuffer(dst, end, digits+1))
+          else
           {
-            // add two extra bytes fo '0x'
-            dst += snprintf(dst, digits+1+2, "0x%x", value);
+            // the first char of our hex value
+            *tmpReturnValue = hexchars[value >> 28];
+            return tmpReturnValue;
           }
           break;
         }
