@@ -44,19 +44,31 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
         {
           ++argCount;
           signed int value  = va_arg(arguments,signed int);
+          unsigned int positiveValue;
           if( value < 0)
           {
-            value = std::abs(value);
+            positiveValue = std::abs(value);
             if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
             {
               putCharInBuffer(&dst, '-');
             }
+            else
+            {
+              *tmpReturnValue = '-';
+              return tmpReturnValue;
+            }
           }
-          // For every digit a char is needed!
-          size_t digits = getBytesCountOfInt(value, 10);
-          if(isEnoughFreeSpaceInBuffer(dst, end, digits))
+          else
           {
-            dst += snprintf(dst, digits+1, "%d", value);
+            positiveValue = value;
+          }
+
+          char* returnPointer = uintToChars(positiveValue, &dst, end);
+          if(returnPointer != nullptr)
+          {
+            // return first not printable char
+            *tmpReturnValue = *returnPointer;
+            return tmpReturnValue;
           }
           break;
         }
@@ -66,12 +78,13 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
         {
           unsigned int value  = va_arg(arguments, unsigned int);
           // For every digit a char is needed!
-          size_t digits = getBytesCountOfInt(value, 10);
-          if(isEnoughFreeSpaceInBuffer(dst, end, digits))
+          char* returnPointer = uintToChars(value, &dst, end);
+          if(returnPointer == nullptr)
           {
-            dst += snprintf(dst, digits+1, "%d", value);
+            // return first not printable char
+            *tmpReturnValue = *returnPointer;
+            return tmpReturnValue;
           }
-
           break;
         }
         // %c char
