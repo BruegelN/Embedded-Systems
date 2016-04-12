@@ -17,7 +17,7 @@ static char* tmpReturnValue = nullptr;
 
 char* Printf(char *dst, const void *end, const char *fmt, ...)
 {
-  if(dst == nullptr || fmt == nullptr || end == nullptr  )
+  if(dst == nullptr || fmt == nullptr || end == nullptr || end < dst )
   {
     // invalid call
     return nullptr;
