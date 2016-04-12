@@ -13,9 +13,8 @@ static bool isEnoughFreeSpaceInBuffer(char* dst, const void* end, size_t nBytes)
 /**
 * use pointer to char* to decrease the buffer automaticly whenever a char is placed in buffer.
 */
-static size_t getBytesCountOfInt(unsigned int value, int base);
-//static void reduceRemainingBufer(char **dst, size_t nBytes);
 static void putCharInBuffer(char** dstAddr, char value);
+static char* uintToChars(unsigned int value, char** dstAddr, const void* end);
 
 // TODO
 static char* tmpReturnValue = nullptr;
@@ -228,13 +227,36 @@ static void putCharInBuffer(char** dstAddr, char value)
   (*dstAddr) = *dstAddr +1;
 }
 
-static size_t getBytesCountOfInt(unsigned int value, int base)
+static char* uintToChars(uint32_t value, char** dstAddr, const void* end)
 {
+  // http://www.cplusplus.com/articles/D9j2Nwbp/#bad
+
+  uint32_t tmpValue = value;
   size_t digits = 0;
-  while( value != 0 )
+  while(tmpValue != 0)
   {
-   value /= base;
-   digits++;
+    tmpValue /= 10;
+    digits++;
   }
-  return digits;
+
+  // because array starts a [0]
+  size_t positons = digits-1;
+  if(dstAddr == nullptr || *dstAddr == nullptr || end == nullptr || !isEnoughFreeSpaceInBuffer(*dstAddr,end, positons))
+  {
+    *tmpReturnValue = tmpValue+'0';
+    return tmpReturnValue;
+  }
+  else
+  {
+
+    do
+    {
+      // generate digits in reverse order
+      (*dstAddr)[positons--] = static_cast<char>(value % 10 + '0');   // get next digit
+    } while ((value /= 10) > 0); // digit added thus head over to the next one
+
+    // decrease buffer
+    (*dstAddr) = *dstAddr + digits;
+  }
+  return nullptr;
 }
