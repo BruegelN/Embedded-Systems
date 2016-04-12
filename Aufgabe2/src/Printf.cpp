@@ -93,7 +93,9 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           }
           else
           {
-            // TODO
+            // ptr to next single char
+            *tmpReturnValue = value;
+            return tmpReturnValue;
           }
           break;
         }
@@ -107,6 +109,12 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
             if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
             {
               putCharInBuffer(&dst, *value);
+            }
+            else
+            {
+              // ptr to next char
+              *tmpReturnValue = *value;
+              return tmpReturnValue;
             }
             value++;
           }
@@ -197,6 +205,11 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           {
             putCharInBuffer(&dst, '%');
           }
+          else
+          {
+            *tmpReturnValue = '%';
+            return tmpReturnValue;
+          }
           break;
       }
     }
@@ -205,6 +218,12 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
       if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
       {
         putCharInBuffer(&dst, fmt[argCount]);
+      }
+      else
+      {
+        // last char
+        *tmpReturnValue = fmt[argCount];
+        return tmpReturnValue;
       }
     }
   }
