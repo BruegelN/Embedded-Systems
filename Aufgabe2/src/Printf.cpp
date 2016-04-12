@@ -12,8 +12,10 @@ static bool isEnoughFreeSpaceInBuffer(char* dst, const void* end, size_t nBytes)
 static void putCharInBuffer(char** dstAddr, char value);
 static char* uintToChars(unsigned int value, char** dstAddr, const void* end);
 
-// TODO
-static char* tmpReturnValue = nullptr;
+
+// TODO find better/ more c++ way
+// global memory-acrea for return value of Printf function
+static char returnBuffer = 0;
 
 char* Printf(char *dst, const void *end, const char *fmt, ...)
 {
@@ -48,8 +50,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
             }
             else
             {
-              *tmpReturnValue = '-';
-              return tmpReturnValue;
+              returnBuffer = '-';
+              return &returnBuffer;
             }
           }
           else
@@ -61,8 +63,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           if(returnPointer != nullptr)
           {
             // return first not printable char
-            *tmpReturnValue = *returnPointer;
-            return tmpReturnValue;
+            returnBuffer = *returnPointer;
+            return &returnBuffer;
           }
           break;
         }
@@ -77,8 +79,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           if(returnPointer != nullptr)
           {
             // return first not printable char
-            *tmpReturnValue = *returnPointer;
-            return tmpReturnValue;
+            returnBuffer = *returnPointer;
+            return &returnBuffer;
           }
           break;
         }
@@ -95,8 +97,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           else
           {
             // ptr to next single char
-            *tmpReturnValue = value;
-            return tmpReturnValue;
+            returnBuffer = value;
+            return &returnBuffer;
           }
           break;
         }
@@ -114,8 +116,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
             else
             {
               // ptr to next char
-              *tmpReturnValue = *value;
-              return tmpReturnValue;
+              returnBuffer = *value;
+              return &returnBuffer;
             }
             value++;
           }
@@ -151,8 +153,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           else
           {
             // the first char of our hex value
-            *tmpReturnValue = hexchars[value >> 28];
-            return tmpReturnValue;
+            returnBuffer = hexchars[value >> 28];
+            return &returnBuffer;
           }
           break;
         }
@@ -168,8 +170,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           }
           else
           {
-            *tmpReturnValue = 'b';
-            return tmpReturnValue;
+            returnBuffer = 'b';
+            return &returnBuffer;
           }
 
           // for look up
@@ -193,8 +195,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
             }
             else
             {
-              *tmpReturnValue = tmpChar;
-              return tmpReturnValue;
+              returnBuffer = tmpChar;
+              return &returnBuffer;
             }
           }
           break;
@@ -208,8 +210,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           }
           else
           {
-            *tmpReturnValue = '%';
-            return tmpReturnValue;
+            returnBuffer = '%';
+            return &returnBuffer;
           }
           break;
       }
@@ -223,8 +225,8 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
       else
       {
         // last char
-        *tmpReturnValue = fmt[argCount];
-        return tmpReturnValue;
+        returnBuffer = fmt[argCount];
+        return &returnBuffer;
       }
     }
   }
@@ -271,8 +273,8 @@ static char* uintToChars(uint32_t value, char** dstAddr, const void* end)
   size_t positons = digits-1;
   if(dstAddr == nullptr || *dstAddr == nullptr || end == nullptr || !isEnoughFreeSpaceInBuffer(*dstAddr,end, positons))
   {
-    *tmpReturnValue = tmpValue+'0';
-    return tmpReturnValue;
+    returnBuffer = tmpValue+'0';
+    return &returnBuffer;
   }
   else
   {
