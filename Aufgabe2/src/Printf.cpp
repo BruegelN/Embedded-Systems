@@ -17,6 +17,8 @@ static size_t getBytesCountOfInt(unsigned int value, int base);
 //static void reduceRemainingBufer(char **dst, size_t nBytes);
 static void putCharInBuffer(char** dstAddr, char value);
 
+// TODO
+static char* tmpReturnValue = nullptr;
 
 char* Printf(char *dst, const void *end, const char *fmt, ...)
 {
