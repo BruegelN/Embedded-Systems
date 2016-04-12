@@ -10,12 +10,13 @@
 
 /* Helper functions */
 static bool isEnoughFreeSpaceInBuffer(char* dst, const void* end, size_t nBytes);
-static void putCharInBuffer(char* dst, char value);
+/**
+* use pointer to char* to decrease the buffer automaticly whenever a char is placed in buffer.
+*/
+static void putCharInBuffer(char** dst, char value);
 static size_t getBytesCountOfInt(unsigned int value, int base);
 //static void reduceRemainingBufer(char **dst, size_t nBytes);
 
-// TODO not c++ style but quick fix
-static unsigned int positionInBuffer;
 
 char* Printf(char *dst, const void *end, const char *fmt, ...)
 {
@@ -47,14 +48,14 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
             value = std::abs(value);
             if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
             {
-              putCharInBuffer(dst, '-');
+              putCharInBuffer(&dst, '-');
             }
           }
           // For every digit a char is needed!
           size_t digits = getBytesCountOfInt(value, 10);
           if(isEnoughFreeSpaceInBuffer(dst, end, digits))
           {
-            positionInBuffer += snprintf(&dst[positionInBuffer], digits+1, "%d", value);
+            dst += snprintf(dst, digits+1, "%d", value);
           }
           break;
         }
@@ -67,7 +68,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           size_t digits = getBytesCountOfInt(value, 10);
           if(isEnoughFreeSpaceInBuffer(dst, end, digits))
           {
-            positionInBuffer += snprintf(&dst[positionInBuffer], digits+1, "%d", value);
+            dst += snprintf(dst, digits+1, "%d", value);
           }
 
           break;
@@ -80,7 +81,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           char value = va_arg(arguments, int);
           if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
           {
-            putCharInBuffer(dst, value);
+            putCharInBuffer(&dst, value);
           }
           else
           {
@@ -97,7 +98,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           {
             if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
             {
-              putCharInBuffer(dst, *value);
+              putCharInBuffer(&dst, *value);
             }
             value++;
           }
@@ -114,7 +115,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
             value = std::abs(value);
             if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
             {
-              putCharInBuffer(dst, '-');
+              putCharInBuffer(&dst, '-');
             }
           }
           // For every digit a char is needed!
@@ -122,7 +123,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           if(isEnoughFreeSpaceInBuffer(dst, end, digits+1))
           {
             // add two extra bytes fo '0x'
-            positionInBuffer += snprintf(&dst[positionInBuffer], digits+1+2, "0x%x", value);
+            dst += snprintf(dst, digits+1+2, "0x%x", value);
           }
           break;
         }
@@ -137,7 +138,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
             value = std::abs(value);
             if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
             {
-              putCharInBuffer(dst, '-');
+              putCharInBuffer(&dst, '-');
             }
           }
           // For every digit a char is needed!
@@ -153,7 +154,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
           // print the percent symbol e.g. 100%
           if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
           {
-            putCharInBuffer(dst, '%');
+            putCharInBuffer(&dst, '%');
           }
           break;
       }
@@ -162,7 +163,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
     {
       if(isEnoughFreeSpaceInBuffer(dst, end,sizeof(char)))
       {
-        putCharInBuffer(dst, fmt[argCount]);
+        putCharInBuffer(&dst, fmt[argCount]);
       }
     }
   }
@@ -172,7 +173,7 @@ char* Printf(char *dst, const void *end, const char *fmt, ...)
 
 static bool isEnoughFreeSpaceInBuffer(char* dst, const void* end, size_t nBytes)
 {
-  if(&dst[positionInBuffer] + nBytes > end)
+  if(dst + nBytes > end)
   {
     return false;
   }
@@ -182,14 +183,14 @@ static bool isEnoughFreeSpaceInBuffer(char* dst, const void* end, size_t nBytes)
   }
 }
 
-static void putCharInBuffer(char* dst, char value)
+static void putCharInBuffer(char** dst, char value)
 {
-  if(dst == nullptr)
+  if(dst == nullptr || *dst == nullptr)
   {
     return;
   }
-  dst[positionInBuffer] = value;
-  positionInBuffer++;
+  (*dst)[0] = value;
+  (*dst) = *dst +1;
 }
 
 static size_t getBytesCountOfInt(unsigned int value, int base)
