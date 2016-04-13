@@ -5,6 +5,7 @@
 #include <cstddef> /* size_t */
 #include <cstdio>
 #include <cstdarg>
+#include <cstring> /* strlen(), memcpy() */
 
 /**
 * String class which allocates a char[] with Buffersize+1 emlements at compile time.
@@ -49,6 +50,10 @@ class PreAllocString
   private:
     // add extra char for tailing '\0'
     char m_buffer[Buffersize+1];
+
+    size_t getFreeSpace();
+    void appendToBuffer(char);
+    void appendToBuffer(const char*);
 
 };
 
@@ -121,6 +126,23 @@ void PreAllocString<Buffersize>::AddWhiteSpace ()
   }
 }
 
+template <size_t Buffersize>
+size_t PreAllocString<Buffersize>::getFreeSpace()
+{
+  return Buffersize-strlen(m_buffer);
+}
+
+template <size_t Buffersize>
+void PreAllocString<Buffersize>::appendToBuffer(char c)
+{
+  m_buffer[strlen(m_buffer) +1 ] = c;
+}
+
+template <size_t Buffersize>
+void PreAllocString<Buffersize>::appendToBuffer(const char* str)
+{
+  memcpy(&m_buffer[strlen(m_buffer) +1 ], str, strlen(str));
+}
 
 
 #endif // PRE_ALLOC_STRING_H
