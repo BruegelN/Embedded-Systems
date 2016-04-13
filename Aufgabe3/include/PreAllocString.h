@@ -42,8 +42,8 @@ class PreAllocString
     PreAllocString& operator =( const char*       rhs);
     PreAllocString& operator =(       char* const rhs);
 
-    PreAllocString& operator +=(char              rhs);
-    PreAllocString& operator +=(char      const*  rhs);
+    PreAllocString& operator +=(      char        rhs);
+    PreAllocString& operator +=(const char*       rhs);
     void AddFormat ( const char* format, ... );
     void AddWhiteSpace ();
 
