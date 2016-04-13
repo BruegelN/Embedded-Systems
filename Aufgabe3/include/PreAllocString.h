@@ -102,6 +102,71 @@ void PreAllocString<Buffersize>::Empty()
 }
 
 template <size_t Buffersize>
+PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator =( char rhs)
+{
+  // first clear old values
+  this->Empty();
+  m_buffer[0] = rhs;
+  return this;
+}
+
+template <size_t Buffersize>
+PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator =( const char* rhs)
+{
+  // first clear old values
+  this->Empty();
+  if(strlen(rhs)>Buffersize)
+  {
+    // the string it to large
+    return nullptr;
+  }
+  // else copy
+  memcpy(m_buffer, rhs, strlen(rhs));
+  return this;
+}
+template <size_t Buffersize>
+PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator =( char* const rhs)
+{
+  // first clear old values
+  this->Empty();
+  if(strlen(rhs)>Buffersize)
+  {
+    // the char it to large
+    return nullptr;
+  }
+  // else copy
+  memcpy(m_buffer, rhs, strlen(rhs));
+  return this;
+}
+
+template <size_t Buffersize>
+PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator +=(char rhs)
+{
+  if(this->getFreeSpace() < sizeof(char))
+  {
+    // not enought buffer space left!
+    return nullptr;
+  }
+  // else append it to current string
+  this->appendToBuffer(rhs);
+  return this;
+
+}
+
+template <size_t Buffersize>
+PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator +=(char const* rhs)
+{
+  if(this->getFreeSpace() < strlen(rhs))
+  {
+    // not enought buffer space left!
+    return nullptr;
+  }
+  // else append it to current string
+  this->appendToBuffer(rhs);
+  return this;
+}
+
+template <size_t Buffersize>
 void PreAllocString<Buffersize>::AddFormat(const char *format, ...)
 {
   va_list args;
