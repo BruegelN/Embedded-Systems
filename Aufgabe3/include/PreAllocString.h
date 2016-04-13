@@ -20,20 +20,12 @@ class PreAllocString
     PreAllocString():m_buffer{0}{}
     ~PreAllocString(){}
 
-    operator const char *() const
-    {
-      return m_buffer;
-    }
-
-    operator const void *() const
-    {
-      return static_cast<const void*>(m_buffer);
-    }
-
-    const char & operator [] (const int idx)
-    {
-      return m_buffer[idx];
-    }
+    // get raw data as const char*
+    operator const char *() const;
+    // get raw data as const void*
+    operator const void *() const;
+    // get elemtent with number idx of buffer as char
+    const char & operator [] (const int idx);
 
     // Current number of characters in string
      size_t GetLength() const;
@@ -65,6 +57,23 @@ class PreAllocString
                               IMPLEMENTTION
 --------------------------------------------------------------------------------
 */
+
+template <size_t Buffersize>
+PreAllocString<Buffersize>::operator const char *() const
+{
+  return m_buffer;
+}
+
+template <size_t Buffersize>
+PreAllocString<Buffersize>::operator const void *() const
+{
+  return static_cast<const void*>(m_buffer);
+}
+template <size_t Buffersize>
+const char & PreAllocString<Buffersize>::operator [] (const int idx)
+{
+  return m_buffer[idx];
+}
 
 template <size_t Buffersize>
 size_t PreAllocString<Buffersize>::GetLength() const
