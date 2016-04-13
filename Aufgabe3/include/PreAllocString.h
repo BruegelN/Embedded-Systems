@@ -3,7 +3,15 @@
 
 #include <cstdint> /* uint_32_t etc. */
 #include <cstddef> /* size_t */
+#include <cstdio>
+#include <cstdarg>
 
+/**
+* String class which allocates a char[] with Buffersize+1 emlements at compile time.
+* The extra byte is used to store the tailing '\0'.
+* This allows the user to place Buffersize-emlemnts in string without caring about the zero termination
+* or not enough space.
+*/
 template <size_t Buffersize>
 class PreAllocString
 {
@@ -47,7 +55,8 @@ class PreAllocString
     void AddWhiteSpace ();
 
   private:
-    char m_buffer[Buffersize];
+    // add extra char for tailing '\0'
+    char m_buffer[Buffersize+1];
 
 };
 
@@ -60,14 +69,13 @@ class PreAllocString
 template <size_t Buffersize>
 size_t PreAllocString<Buffersize>::GetLength() const
 {
-  /* TODO return real string lenght */
   return  strlen(m_buffer);
 }
 
 template <size_t Buffersize>
 constexpr size_t PreAllocString<Buffersize>::SizeOf() const
 {
-  return  Buffersize-1;
+  return  Buffersize;
 }
 
 template <size_t Buffersize>
@@ -80,11 +88,27 @@ void PreAllocString<Buffersize>::Empty()
 }
 
 template <size_t Buffersize>
+void PreAllocString<Buffersize>::AddFormat(const char *format, ...)
+{
+  va_list args;
+  va_start(args, format);
+  size_t lenght = GetLength();
+  if(lenght<SizeOf())
+  {
+    //snprintf(m_buffer, Buffersize, format, ...);
+
+  }
+  va_end(args);
+}
+
+template <size_t Buffersize>
 void PreAllocString<Buffersize>::AddWhiteSpace ()
 {
-  if(true)
+  size_t lenght = GetLength();
+  if(lenght<SizeOf())
   {
-
+    // at least one char free
+    m_buffer[lenght+1] = ' ';
   }
 }
 
