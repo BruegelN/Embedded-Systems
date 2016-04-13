@@ -106,9 +106,10 @@ void PreAllocString<Buffersize>::AddFormat(const char *format, ...)
 {
   va_list args;
   va_start(args, format);
-  size_t lenght = GetLength();
-  if(lenght<SizeOf())
+  size_t lenght = this->GetLength();
+  if(lenght<this->SizeOf())
   {
+    // TODO while args
     //snprintf(m_buffer, Buffersize, format, ...);
 
   }
@@ -118,8 +119,8 @@ void PreAllocString<Buffersize>::AddFormat(const char *format, ...)
 template <size_t Buffersize>
 void PreAllocString<Buffersize>::AddWhiteSpace ()
 {
-  size_t lenght = GetLength();
-  if(lenght<SizeOf())
+  size_t lenght = this->GetLength();
+  if(lenght<this->SizeOf())
   {
     // at least one char free
     m_buffer[lenght+1] = ' ';
