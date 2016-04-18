@@ -77,6 +77,7 @@ PreAllocString<Buffersize>::operator const void *() const
 template <size_t Buffersize>
 const char & PreAllocString<Buffersize>::operator [] (const int idx)
 {
+  // TODO check boundaries and if index is larger or equal to 0
   return m_buffer[idx];
 }
 
@@ -124,6 +125,7 @@ PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator =( const char* 
   }
   return *this;
 }
+
 template <size_t Buffersize>
 PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator =( char* const rhs)
 {
