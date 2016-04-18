@@ -201,13 +201,13 @@ size_t PreAllocString<Buffersize>::getFreeSpace()
 template <size_t Buffersize>
 void PreAllocString<Buffersize>::appendToBuffer(char c)
 {
-  m_buffer[strlen(m_buffer) +1 ] = c;
+  m_buffer[strlen(m_buffer) ] = c;
 }
 
 template <size_t Buffersize>
 void PreAllocString<Buffersize>::appendToBuffer(const char* str)
 {
-  memcpy(&m_buffer[strlen(m_buffer) +1 ], str, strlen(str));
+  memcpy(&m_buffer[strlen(m_buffer) ], str, strlen(str));
 }
 
 
