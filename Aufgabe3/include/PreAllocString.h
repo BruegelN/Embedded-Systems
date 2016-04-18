@@ -3,7 +3,6 @@
 
 #include <cstdint> /* uint_32_t etc. */
 #include <cstddef> /* size_t */
-#include <cstdio>
 #include <cstdarg>
 #include <cstring> /* strlen(), memcpy() */
 
@@ -31,9 +30,8 @@ class PreAllocString
     // Current number of characters in string
      size_t GetLength() const;
 
-    // TODO constexpr allowed?
     // Maximum number of characters possible
-    constexpr size_t SizeOf() const;
+    size_t SizeOf() const;
 
     // clear the array
     void Empty();
@@ -88,7 +86,7 @@ size_t PreAllocString<Buffersize>::GetLength() const
 }
 
 template <size_t Buffersize>
-constexpr size_t PreAllocString<Buffersize>::SizeOf() const
+size_t PreAllocString<Buffersize>::SizeOf() const
 {
   return  Buffersize;
 }
