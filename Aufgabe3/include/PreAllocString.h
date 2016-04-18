@@ -95,7 +95,8 @@ constexpr size_t PreAllocString<Buffersize>::SizeOf() const
 template <size_t Buffersize>
 void PreAllocString<Buffersize>::Empty()
 {
-  for( size_t i = 0; i < Buffersize; i++)
+  // because of the '\n'
+  for( size_t i = 0; i < Buffersize+1; i++)
   {
     m_buffer[i] = 0;
   }
