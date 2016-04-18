@@ -184,7 +184,7 @@ void PreAllocString<Buffersize>::AddWhiteSpace ()
   if(lenght<this->SizeOf())
   {
     // at least one char free
-    m_buffer[lenght+1] = ' ';
+    appendToBuffer(' ');
   }
 }
 
