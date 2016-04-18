@@ -108,7 +108,7 @@ PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator =( char rhs)
   // first clear old values
   this->Empty();
   m_buffer[0] = rhs;
-  return this;
+  return *this;
 }
 
 template <size_t Buffersize>
@@ -116,55 +116,50 @@ PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator =( const char* 
 {
   // first clear old values
   this->Empty();
-  if(strlen(rhs)>Buffersize)
+  if(strlen(rhs) <= Buffersize)
   {
-    // the string it to large
-    return nullptr;
+    // copy string
+    memcpy(m_buffer, rhs, strlen(rhs));
+    // else the string is to large
   }
-  // else copy
-  memcpy(m_buffer, rhs, strlen(rhs));
-  return this;
+  return *this;
 }
 template <size_t Buffersize>
 PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator =( char* const rhs)
 {
   // first clear old values
   this->Empty();
-  if(strlen(rhs)>Buffersize)
+  if(strlen(rhs) <= Buffersize)
   {
-    // the char it to large
-    return nullptr;
+    // copy char
+    memcpy(m_buffer, rhs, strlen(rhs));
+    // else the char it to large
   }
-  // else copy
-  memcpy(m_buffer, rhs, strlen(rhs));
-  return this;
+  return *this;
 }
 
 template <size_t Buffersize>
 PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator +=(char rhs)
 {
-  if(this->getFreeSpace() < sizeof(char))
+  if(this->getFreeSpace() >= sizeof(char))
   {
-    // not enought buffer space left!
-    return nullptr;
+    // append it to current string
+    this->appendToBuffer(rhs);
+    // else not enought buffer space left!
   }
-  // else append it to current string
-  this->appendToBuffer(rhs);
-  return this;
-
+  return *this;
 }
 
 template <size_t Buffersize>
 PreAllocString<Buffersize>& PreAllocString<Buffersize>::operator +=(char const* rhs)
 {
-  if(this->getFreeSpace() < strlen(rhs))
+  if(this->getFreeSpace() >= strlen(rhs))
   {
+    // append it to current string
+    this->appendToBuffer(rhs);
     // not enought buffer space left!
-    return nullptr;
   }
-  // else append it to current string
-  this->appendToBuffer(rhs);
-  return this;
+  return *this;
 }
 
 template <size_t Buffersize>
