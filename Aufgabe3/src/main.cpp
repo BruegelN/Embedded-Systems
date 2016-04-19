@@ -12,8 +12,8 @@ int main(void) {
   test += "adsf";
   test += '3';
 
-  size_t lenght = test.GetLength();
-  size_t buffersize = test.SizeOf();
+  const size_t lenght = test.GetLength();
+  const size_t buffersize = test.SizeOf();
 
   std::cout << "Strlen is: " << lenght << std::endl;
   std::cout << "Template buffersize is: " << buffersize << std::endl;
@@ -63,7 +63,14 @@ int main(void) {
   }
   std::cout << std::endl << std::endl;
 
-
-
+  // testing AddFormat()
+  test.Empty();
+  test.AddFormat("test%d",10);
+  test.AddWhiteSpace();
+  for(size_t i = 0;  i < lenght+4; i++)
+  {
+    std::cout << i << " is " << test[i] << std::endl;
+  }
+  std::cout << std::endl << std::endl;
   return 0;
 }

@@ -5,6 +5,7 @@
 #include <cstddef> /* size_t */
 #include <cstdarg>
 #include <cstring> /* strlen(), memcpy() */
+#include "Printf.h"
 
 /**
 * String class which allocates a char[] with Buffersize+1 emlements at compile time.
@@ -25,6 +26,7 @@ class PreAllocString
     // get raw data as const void*
     operator const void *() const;
     // get elemtent with number idx of buffer as char
+    // if out of range access the first element is returned!
     const char & operator [] (const int idx);
 
     // Current number of characters in string
@@ -175,13 +177,8 @@ void PreAllocString<Buffersize>::AddFormat(const char *format, ...)
 {
   va_list args;
   va_start(args, format);
-  size_t lenght = this->GetLength();
-  if(lenght<this->SizeOf())
-  {
-    // TODO while args
-    //snprintf(m_buffer, Buffersize, format, ...);
-
-  }
+  // The last element of m_buffer is \0 an thus it should not be overwritten by Printf
+  Printf(m_buffer, (m_buffer+Buffersize-1), format, args);
   va_end(args);
 }
 
