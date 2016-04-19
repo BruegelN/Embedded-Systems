@@ -75,8 +75,16 @@ PreAllocString<Buffersize>::operator const void *() const
 template <size_t Buffersize>
 const char & PreAllocString<Buffersize>::operator [] (const int idx)
 {
-  // TODO check boundaries and if index is larger or equal to 0
-  return m_buffer[idx];
+  if(static_cast<uint32_t>(idx) > Buffersize)
+  {
+    // in case it's negative the it will be casted to a very high positive number
+    // or it's just large then the buffersize
+    return m_buffer[0]; // undefined thus return first element
+  }
+  else
+  {
+    return m_buffer[idx];
+  }
 }
 
 template <size_t Buffersize>
