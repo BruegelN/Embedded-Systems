@@ -67,6 +67,7 @@ int main(void) {
   test.Empty();
   test.AddFormat("test%d",10);
   test.AddWhiteSpace();
+  test.AddFormat("%b",3);
   for(size_t i = 0;  i < lenght+4; i++)
   {
     std::cout << i << " is " << test[i] << std::endl;

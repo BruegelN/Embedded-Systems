@@ -177,8 +177,10 @@ void PreAllocString<Buffersize>::AddFormat(const char *format, ...)
 {
   va_list args;
   va_start(args, format);
-  // The last element of m_buffer is \0 an thus it should not be overwritten by Printf
-  Printf(m_buffer, (m_buffer+Buffersize-1), format, args);
+  size_t endOfCurrentString = strlen(m_buffer);
+  // The last element of m_buffer is \0 an thus it should not be overwritten by Printf!
+  // Append it to the end of an possible existing string.
+  Printf(&m_buffer[endOfCurrentString], (m_buffer+Buffersize-1), format, args);
   va_end(args);
 }
 
