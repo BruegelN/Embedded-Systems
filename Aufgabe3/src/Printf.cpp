@@ -1,6 +1,7 @@
 // #include <cstdarg> allready included in header
 #include <cstdbool>
 #include <cstdlib> /* size_t */
+#include <cstdint>
 
 #include "Printf.h"
 
