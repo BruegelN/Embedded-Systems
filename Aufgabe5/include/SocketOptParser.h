@@ -6,6 +6,16 @@
 
 #include "OptParser.h"
 
+
+/*
+CmdLine parser for UDP/Socket exercise in embedded systems lecture.
+
+Options detected:
+  -s is for socketmode
+  -p is for the port number
+  -i is for the ip-address
+Either call it in server mode or provide an ip-address.
+*/
 class SocketOptParser final: public CmdLineOptParser {
   public:
     SocketOptParser();

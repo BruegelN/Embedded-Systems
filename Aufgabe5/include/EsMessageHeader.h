@@ -3,6 +3,19 @@
 
 #include "EsMessageCommand.h"
 
+/*
+The struct for a header of a EsProtocol::Message.
+0               15               31        47       63
++---------------+----------------+---------+--------+----------+
+| payloadLength | sequenceNumber | command | handle | data ... |
++---------------+----------------+---------+--------+----------+
+payloadLength: Overall number of bytes of whole EsProtocol::Message.
+sequenceNumber: The number of the message transfered, should increment everytime.
+command: A known EsProtocol::Command.
+handle: TODO ??
+data: The acutel payload
+*/
+
 namespace EsProtocol
 {
   struct Header

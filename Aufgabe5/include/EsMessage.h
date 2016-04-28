@@ -5,6 +5,16 @@
 #include "EsMessageHeader.h"
 #include "EsMessageCommand.h"
 
+/*
+An EsProtocol::Message starts with a EsProtocol::Header and the actual data.
+When 
+
+0                    63
++--------------------+----------+
+| EsProtocol::Header | data ... |
++--------------------+----------+
+
+*/
 namespace EsProtocol
 {
   class Message
