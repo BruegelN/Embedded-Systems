@@ -1,7 +1,11 @@
 #ifndef IHEAP_H
   #define IHEAP_H
 
-#include <cstddef>
+#include <cstddef> // size_t
+
+/*
+* Interface for PoolAllocator
+*/
 
 class IHeap {
 public:
