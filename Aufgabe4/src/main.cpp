@@ -2,5 +2,5 @@
 
 int main(void)
 {
-  
+    PoolAllocator<2,10> peter; 
 }
