@@ -18,14 +18,14 @@ public:
   * if possible return the start address and set the flags in 'poolManager'.
   * else nullptr.
   */
-  inline static void* Allocate( const size_t &nBytes, char* const pool,
+  static void* Allocate( const size_t &nBytes, char* const pool,
                                 const size_t &blockSize, const size_t &nElements,
                                 MemoryCtrlStruct* const poolManager);
 
   /*
   * Marks the memory area starting with 'address' unitl next isEndOfMemoryBlock as isFree.
   */
-  inline static void Deallocate(  const void* const address, const char* const pool,
+  static void Deallocate(  const void* const address, const char* const pool,
                                   const size_t &blockSize, const size_t &nElements,
                                   MemoryCtrlStruct* const poolManager);
 
@@ -36,7 +36,7 @@ public:
   * NOTE: The overall free memory is NOT returned on purpos.
   * So it's guaranteed that a user can Allocate the amound returned.
   */
-  inline static size_t Available( const size_t &blockSize, const size_t &nElements,
+  static size_t Available( const size_t &blockSize, const size_t &nElements,
                                   const MemoryCtrlStruct* const poolManager);
 
 
