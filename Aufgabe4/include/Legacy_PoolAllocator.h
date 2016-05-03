@@ -1,12 +1,14 @@
-#ifndef POOL_ALLOCATOR_H
-  #define POOL_ALLOCATOR_H
+#ifndef LEGACY_POOL_ALLOCATOR_H
+  #define LEGACY_POOL_ALLOCATOR_H
 
 #include <cstddef> // size_t
 
 #include "IHeap.h"            // the interface
-#include "MemoryCtrlStruct.h" // to mark a piece memory as FREE and/or END
-#include "MemoryHandler.h"    // the actual implemantation
+#include "Legacy_MemoryCtrlStruct.h" // to mark a piece memory as FREE and/or END
+#include "Legacy_MemoryHandler.h"    // the actual implemantation
 
+namespace legacy
+{
 
 /*
 * PoolAllocator
@@ -71,4 +73,6 @@ private:
   MemoryCtrlStruct m_PoolManager[nElements];
 
 };
+
+} // namespace legacy
 #endif // POOL_ALLOCATOR_H

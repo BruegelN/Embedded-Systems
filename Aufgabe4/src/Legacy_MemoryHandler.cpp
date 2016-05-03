@@ -1,7 +1,7 @@
-#include "MemoryHandler.h"
+#include "Legacy_MemoryHandler.h"
 
 
-void* MemoryHandler::Allocate(const size_t &nBytes, char* const pool,
+void* legacy::MemoryHandler::Allocate(const size_t &nBytes, char* const pool,
                               const size_t &blockSize, const size_t &nElements,
                               MemoryCtrlStruct* const poolManager)
 {
@@ -53,7 +53,7 @@ void* MemoryHandler::Allocate(const size_t &nBytes, char* const pool,
   return nullptr;
 }
 
-void MemoryHandler::Deallocate( const void* const address, const char* const pool,
+void legacy::MemoryHandler::Deallocate( const void* const address, const char* const pool,
                                 const size_t &blockSize, const size_t &nElements,
                                 MemoryCtrlStruct* const poolManager)
 {
@@ -82,7 +82,7 @@ void MemoryHandler::Deallocate( const void* const address, const char* const poo
   }while(poolManager[pos].isEndOfMemoryBlock);
 }
 
-size_t MemoryHandler::Available(const size_t &blockSize, const size_t &nElements,
+size_t legacy::MemoryHandler::Available(const size_t &blockSize, const size_t &nElements,
                                 const MemoryCtrlStruct* const poolManager)
 {
   if (poolManager == nullptr
@@ -112,7 +112,7 @@ size_t MemoryHandler::Available(const size_t &blockSize, const size_t &nElements
   return largestFreeMemBlock*blockSize;
 }
 
-size_t MemoryHandler::Available(const size_t &nElements,
+size_t legacy::MemoryHandler::Available(const size_t &nElements,
                                 const MemoryCtrlStruct* const poolManager)
 {
   if (poolManager == nullptr

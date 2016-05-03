@@ -1,10 +1,12 @@
-#ifndef MEMORY_HANDLER_H
-#define MEMORY_HANDLER_H
+#ifndef LEGACY_MEMORY_HANDLER_H
+#define LEGACY_MEMORY_HANDLER_H
 
 #include <cstddef> // size_t
 
-#include "MemoryCtrlStruct.h"
+#include "Legacy_MemoryCtrlStruct.h"
 
+namespace legacy
+{
 /*
 * Implementation for PoolAllocater.
 */
@@ -58,5 +60,7 @@ private:
   MemoryHandler();
   ~MemoryHandler();
 };
+
+} // namespace legacy
 
 #endif // MEMORY_HANDLER_H
