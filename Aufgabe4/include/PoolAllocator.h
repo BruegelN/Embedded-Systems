@@ -41,7 +41,7 @@ public:
   // will return void* to address on success else will return nullptr
   virtual void* Allocate(size_t size) override
   {
-    return MemoryHandler::Allocate((size_t)size, (char*)m_Pool, (size_t)blockSize, (size_t)nElements, (MemoryCtrlStruct* )m_PoolManager);
+    return MemoryHandler::Allocate(size, m_Pool, blockSize, nElements, m_PoolManager);
   };
 
 

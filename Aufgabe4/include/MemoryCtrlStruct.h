@@ -1,8 +1,6 @@
 #ifndef MEMORY_CONTROL_STRUCT_H
 #define MEMORY_CONTROL_STRUCT_H
 
-#include <cstdbool>
-
 struct MemoryCtrlStruct
 {
   // TODO really "usefull" if only 2bit used?
