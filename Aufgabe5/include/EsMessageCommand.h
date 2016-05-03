@@ -22,7 +22,7 @@ namespace EsProtocol
     Echo = 1,
     EchoReply = 2,
     Shutdown = 3,
-    ShutdownReply = 3,
+    ShutdownReply = 4, // auf Nachfrage NICHT 3!
     Unsupported
   };
 }

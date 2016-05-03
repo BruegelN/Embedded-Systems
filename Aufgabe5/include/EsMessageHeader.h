@@ -12,7 +12,7 @@ The struct for a header of a EsProtocol::Message.
 payloadLength: Overall number of bytes of whole EsProtocol::Message.
 sequenceNumber: The number of the message transfered, should increment everytime.
 command: A known EsProtocol::Command.
-handle: TODO ??
+handle: TODO Antwort zu einer Nachricht zuzuordnen, für bestätigung.
 data: The acutel payload
 */
 
