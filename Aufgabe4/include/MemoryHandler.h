@@ -7,7 +7,6 @@
 
 /*
 * Implementation for PoolAllocater.
-* TODO template args as constexp? will save run time because no need to check!
 */
 class MemoryHandler
 {

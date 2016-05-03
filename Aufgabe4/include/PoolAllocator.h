@@ -21,6 +21,8 @@ public:
   // init data pool with zeros
   PoolAllocator(): m_Pool{0}
   {
+    static_assert(blockSize != 0, "BlockSize of PoolAllocator has to be >0");
+    static_assert(nElements != 0, "nElements of PoolAllocator should be larger than 0");
     // I don't know if this can be done by initializer lists!
     for(size_t i = 0; i < nElements; i++)
     {
