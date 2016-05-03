@@ -26,8 +26,8 @@ public:
   {
     // NOTE:
     // This m_ElementIsFree{true} will only init the first element to true!
-    // The rest of the array will be default-initialied
-    // and because bool is of integral type, this is "reinterpret_cast<bool>0".
+    // The rest of the array will be default-initialized
+    // and because bool is of integral type, this is "reinterpret_cast<bool>0" -> false!
     // https://stackoverflow.com/questions/4059258/is-there-a-better-way-to-initialize-an-array
     // Make use of this "workaround" to not rewrite the memory in constructor again!
 

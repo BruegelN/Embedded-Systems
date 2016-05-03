@@ -2,6 +2,13 @@
 
 #include "PoolAllocator.h"
 
+/*
+* Der Code in legacy:: sowie in allen Dateien mit dem Namen Legacy_* soll nicht bewertet werden.
+* Wie sich vergangen Montag herrausgestellt hat habe ich die Aufgabe falsch verstanden,
+* da es aber nicht fehlerfrei funktioniert hat habe ich den PoolAllocator nochmal neu geschrieben.
+* Die Lösung befindet sich in PoolAllocator.h sowie ImplPoolAllocator.h!
+*/
+
 int main(void)
 {
 
