@@ -5,7 +5,7 @@
 
 SocketOptParser::SocketOptParser()
 : m_bServerMode{false}
-, m_u32PortNumber{0}
+, m_u16PortNumber{0}
 , m_strIpAddress{nullptr}
 {
 }
@@ -32,7 +32,7 @@ bool SocketOptParser::option(char c, const char* info)
   else if('p' == c &&  info != nullptr)
   {
     // using old C-Style strtol is guaranteed not to throw an exception
-    m_u32PortNumber = static_cast<uint32_t>(strtoul(info, (char **)NULL, 10));
+    m_u16PortNumber = static_cast<uint16_t>(strtoul(info, (char **)NULL, 10));
     return true;
   }
   else if('i' == c && info != nullptr && !m_bServerMode)
@@ -51,9 +51,9 @@ bool SocketOptParser::isServerMode() const
   return m_bServerMode;
 }
 
-uint32_t SocketOptParser::getPortNumber() const
+uint16_t SocketOptParser::getPortNumber() const
 {
-  return m_u32PortNumber;
+  return m_u16PortNumber;
 }
 
 const char* SocketOptParser::getIpAddrString() const

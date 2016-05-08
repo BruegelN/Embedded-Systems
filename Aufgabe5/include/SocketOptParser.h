@@ -21,7 +21,7 @@ class SocketOptParser final: public CmdLineOptParser {
     SocketOptParser();
     const char* getHelpText();
     bool isServerMode() const;
-    uint32_t getPortNumber() const;
+    uint16_t getPortNumber() const;
     const char* getIpAddrString() const;
 
   protected:
@@ -29,7 +29,7 @@ class SocketOptParser final: public CmdLineOptParser {
 
   private:
     bool m_bServerMode;
-    uint32_t m_u32PortNumber;
+    uint16_t m_u16PortNumber;
     const char* m_strIpAddress;
 
 };
