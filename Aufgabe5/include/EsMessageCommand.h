@@ -10,8 +10,8 @@ Known commands in V1.0:
 1   | Echo            | Die Daten werden vom Server 1:1 zurückgegeben.
 2   | Echo Reply      | Vom Server geechote Daten.
 3   | Shutdown        | Der Server beendet sich (sauber).
-3   | Shutdown Reply  | Shutdown vom Server verstanden. Client beendet sich nun ebenfalls.
-4+  | Unsupported     | Noch nicht implementiertes Kommando. Meldung auf Konsole mit Kommandonummer.
+4   | Shutdown Reply  | Shutdown vom Server verstanden. Client beendet sich nun ebenfalls.
+5+  | Unsupported     | Noch nicht implementiertes Kommando. Meldung auf Konsole mit Kommandonummer.
 */
 
 namespace EsProtocol
