@@ -16,7 +16,7 @@ Known commands in V1.0:
 
 namespace EsProtocol
 {
-  enum class Command: uint8_t
+  enum /*class*/ Command: uint16_t // TODO  because casting to int
   {
     Invalid = 0,
     Echo = 1,
