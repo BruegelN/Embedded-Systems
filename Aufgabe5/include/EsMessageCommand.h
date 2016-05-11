@@ -16,7 +16,11 @@ Known commands in V1.0:
 
 namespace EsProtocol
 {
-  enum /*class*/ Command: uint16_t // TODO  because casting to int
+  /* enum class is not a good idea in our case
+  * because we bypass most of it's benefits by using a union
+  * and accesing raw memory
+  */
+  enum Command: uint16_t
   {
     Invalid = 0,
     Echo = 1,

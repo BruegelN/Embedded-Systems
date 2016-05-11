@@ -1,8 +1,14 @@
+//#define UDP_SOCKET_TEST
+
 #include <iostream>
 
 #include "SocketOptParser.h"
-#include "UdpSocket.h" // TODO tmp, remove later
-
+#include "UdpSocket.h"
+#include "EsMessageCommand.h"
+#include "EsMessageHeader.h"
+#include "EsMessage.h"
+#include "Communication.h"
+/*
 extern "C"
 {
   #include <arpa/inet.h>
@@ -11,7 +17,7 @@ extern "C"
   #include <netinet/in.h>
   #include <netdb.h>
   #include <unistd.h>
-}
+}*/
 
 int main(int argc, const char** argv)
 {
@@ -25,11 +31,14 @@ int main(int argc, const char** argv)
     return 0;
   }
 
-  struct sockaddr_in otherSide;
+#if 0
+//defined(UDP_SOCKET_TEST)
+  // udp socket test
 
   if(theParser.isServerMode())
   {
     // perform server task
+    struct sockaddr_in otherSide;
     UdpSocket Server = UdpSocket(theParser.getPortNumber());
     std::cout << "Starting server at: " << theParser.getPortNumber() << std::endl;
     if(!Server.hasBeenSuccessfullyCreated())
@@ -49,6 +58,7 @@ int main(int argc, const char** argv)
   else
   {
     // running as client
+    struct sockaddr_in otherSide;
     UdpSocket theClient = UdpSocket();
     std::cout << "Starting theClient to send on: "<< theParser.getIpAddrString() <<":" << theParser.getPortNumber() << std::endl;
 
@@ -70,7 +80,43 @@ int main(int argc, const char** argv)
       std::cout << "Reading echo: " << theClient.read( test, strlen(test),&otherSide) << std::endl;
       sleep(1);
     }
+  }
+#else
+// more than udp socket test
+  if(theParser.isServerMode())
+  {
+
+    EsProtocol::Server gServer; // = EsProtocol::Server();
+    if(!gServer.init(theParser.getPortNumber()))
+    {
+
+      std::cout<< "Could not create server" << std::endl;
+      return 1;
+    }
+
+    while(gServer.run())
+    {
+      // nothing just let the server run!
+    }
+    gServer.shutdown();
+  }
+  else
+  {
+    // running as client
+    EsProtocol::Client gClient;
+    if(!gClient.init(theParser.getIpAddrString(),theParser.getPortNumber()))
+    {
+
+      std::cout<< "Could not create client" << std::endl;
+      return 1;
+    }
+    char test_str[] = "Test test";
+    EsProtocol::Message aMessage(test_str, sizeof(test_str), EsProtocol::Command::Shutdown);
+    // TODO client run
 
   }
+#endif
+//udp socket test
+
   return 0;
 }

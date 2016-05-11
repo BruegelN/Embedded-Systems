@@ -20,10 +20,10 @@ namespace EsProtocol
 {
   struct Header
   {
-    uint16_t payLoadLenght : 16;
-    uint16_t sequenceNumber : 16;
-    EsProtocol::Command command : 16; // TODO check if this really works
-    uint16_t handle : 16;
+    uint16_t payLoadLenght;
+    uint16_t sequenceNumber;
+    EsProtocol::Command command; // TODO check if this really works
+    uint16_t handle;
   }__attribute__ ((__packed__));
 }
 
